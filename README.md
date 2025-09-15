@@ -72,7 +72,6 @@ The application uses a simple schema with a `glossary_terms` table containing:
 - `id`: UUID primary key
 - `term`: The glossary term
 - `definition`: Detailed definition
-- `category`: Term category for filtering
 - `createdAt` & `updatedAt`: Timestamps
 
 ## Available Scripts
