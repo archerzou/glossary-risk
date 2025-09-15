@@ -51,13 +51,6 @@ export function GlossaryList({ initialTerms }: GlossaryListProps) {
           </section>
         ))}
 
-      {Object.keys(groupedTerms).length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground text-lg">
-            No terms found matching your search criteria.
-          </p>
-        </div>
-      )}
     </div>
   );
 }

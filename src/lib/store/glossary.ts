@@ -9,6 +9,7 @@ interface GlossaryState {
   setSearchTerm: (term: string) => void;
   setSelectedLetter: (letter: string | null) => void;
   clearSearch: () => void;
+  clearSelectedLetter: () => void;
   filteredTerms: () => GlossaryTerm[];
 }
 
@@ -20,6 +21,7 @@ export const useGlossaryStore = create<GlossaryState>((set, get) => ({
   setSearchTerm: (searchTerm) => set({ searchTerm }),
   setSelectedLetter: (selectedLetter) => set({ selectedLetter }),
   clearSearch: () => set({ searchTerm: '' }),
+  clearSelectedLetter: () => set({ selectedLetter: null }),
   filteredTerms: () => {
     const { terms, searchTerm, selectedLetter } = get();
     return terms

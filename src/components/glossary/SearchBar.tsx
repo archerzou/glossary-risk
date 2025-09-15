@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { X, Search } from "lucide-react";
 
 export function SearchBar() {
-  const { searchTerm, setSearchTerm, clearSearch } = useGlossaryStore();
+  const { searchTerm, setSearchTerm, clearSearch, clearSelectedLetter } = useGlossaryStore();
 
   return (
     <div className="rounded-lg border p-4 bg-card">
@@ -32,6 +32,15 @@ export function SearchBar() {
             <X className="h-4 w-4" />
           </Button>
         ) : null}
+        <Button
+          variant="secondary"
+          onClick={() => {
+            clearSelectedLetter();
+          }}
+          aria-label="Show all results"
+        >
+          Show All
+        </Button>
       </div>
     </div>
   );
