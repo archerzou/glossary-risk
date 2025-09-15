@@ -1,55 +1,55 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { useGlossaryStore } from "@/lib/store/glossary";
+import type { GlossaryTerm } from "@/lib/db/schema";
 
 const LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
 
 export function AlphabetNav() {
   const { setSelectedLetter, selectedLetter, clearSearch } = useGlossaryStore();
-  const [active, setActive] = useState<string | null>(null);
+  const { terms, searchTerm } = useGlossaryStore();
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => (a.target as HTMLElement).offsetTop - (b.target as HTMLElement).offsetTop);
-        if (visible[0]) {
-          const id = (visible[0].target as HTMLElement).id;
-          const letter = id.replace("letter-", "");
-          setActive(letter);
-        }
-      },
-      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 0.2, 0.5, 1] }
-    );
-
-    LETTERS.forEach((l) => {
-      const el = document.getElementById(`letter-${l}`);
-      if (el) observer.observe(el);
+  const availability = useMemo(() => {
+    const counts: Record<string, number> = {};
+    LETTERS.forEach((l) => (counts[l] = 0));
+    const filteredBySearch = (terms as GlossaryTerm[]).filter((t: GlossaryTerm) => {
+      if (!searchTerm) return true;
+      const q = searchTerm.toLowerCase();
+      return (
+        t.term.toLowerCase().includes(q) ||
+        t.definition.toLowerCase().includes(q)
+      );
     });
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (selectedLetter === null) return;
-    setActive(selectedLetter);
-  }, [selectedLetter]);
+    filteredBySearch.forEach((t: GlossaryTerm) => {
+      const l = t.term.charAt(0).toUpperCase();
+      if (counts[l] !== undefined) counts[l] += 1;
+    });
+    return counts;
+  }, [terms, searchTerm]);
 
   return (
     <div className="rounded-lg border p-2 bg-card overflow-x-auto">
       <div className="flex items-center gap-1 min-w-[640px] md:min-w-0">
         {LETTERS.map((l) => {
-          const isActive = active === l || selectedLetter === l;
+          const isActive = selectedLetter === l;
+          const disabled = availability[l] === 0;
           return (
             <Button
               key={l}
               variant={isActive ? "default" : "ghost"}
               size="sm"
-              className={isActive ? "" : "text-muted-foreground"}
+              className={
+                disabled
+                  ? "text-muted-foreground opacity-50 cursor-not-allowed"
+                  : isActive
+                  ? ""
+                  : "text-blue-600"
+              }
+              disabled={disabled}
               onClick={() => {
+                if (disabled) return;
                 clearSearch();
                 setSelectedLetter(l);
                 const el = document.getElementById(`letter-${l}`);
