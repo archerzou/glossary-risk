@@ -68,6 +68,15 @@ const TERMS: GlossaryTerm[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+  {
+    id: "8",
+    term: "Machine Learning Operations (MLOps)",
+    category: "Artificial Intelligence",
+    definition:
+      "An end-to-end discipline that combines practices, tools, and cultural philosophies to reliably develop, deploy, monitor, and continuously improve machine learning systems in production. MLOps spans dataset versioning, feature stores, model training and evaluation pipelines, experiment tracking, continuous integration/continuous delivery (CI/CD) for models, scalable online/offline inference, observability (data and model drift detection), governance and compliance, rollback strategies, and cross-functional collaboration between data scientists, ML engineers, DevOps, security, and product teams. Effective MLOps minimizes time-to-value, reduces operational risk, and ensures models remain accurate, safe, and aligned with business outcomes over their lifecycle, even as data and user behavior evolve.",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 ];
 
 export default function Home() {
