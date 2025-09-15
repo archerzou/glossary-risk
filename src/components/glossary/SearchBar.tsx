@@ -1,0 +1,65 @@
+"use client";
+
+import { useGlossaryStore } from "@/lib/store/glossary";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { X, Search } from "lucide-react";
+
+const CATEGORIES = ["All", "Content Marketing", "SEO", "Artificial Intelligence"];
+
+export function SearchBar() {
+  const {
+    searchTerm,
+    setSearchTerm,
+    clearSearch,
+    selectedCategory,
+    setSelectedCategory,
+  } = useGlossaryStore();
+
+  return (
+    <div className="rounded-lg border p-4 bg-card">
+      <div className="flex items-center gap-2">
+        <div className="relative w-full">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search terms or definitions..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+        {searchTerm ? (
+          <Button
+            variant="outline"
+            size="icon"
+            aria-label="Clear search"
+            onClick={() => {
+              clearSearch();
+            }}
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        ) : null}
+      </div>
+
+      <div className="flex flex-wrap gap-2 mt-4">
+        {CATEGORIES.map((c) => {
+          const key = c.toLowerCase() === "all" ? "all" : c;
+          const active = (selectedCategory === "all" && c === "All") || selectedCategory === c;
+          return (
+            <Button
+              key={c}
+              variant={active ? "default" : "outline"}
+              size="sm"
+              onClick={() => {
+                setSelectedCategory(key);
+              }}
+            >
+              {c}
+            </Button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
