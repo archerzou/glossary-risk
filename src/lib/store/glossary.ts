@@ -18,7 +18,11 @@ export const useGlossaryStore = create<GlossaryState>((set, get) => ({
   searchTerm: '',
   selectedLetter: null,
   setTerms: (terms) => set({ terms }),
-  setSearchTerm: (searchTerm) => set({ searchTerm }),
+  setSearchTerm: (searchTerm) =>
+    set((state) => ({
+      searchTerm,
+      selectedLetter: searchTerm ? null : state.selectedLetter,
+    })),
   setSelectedLetter: (selectedLetter) => set({ selectedLetter }),
   clearSearch: () => set({ searchTerm: '' }),
   clearSelectedLetter: () => set({ selectedLetter: null }),
