@@ -76,9 +76,7 @@ export default function Home() {
       <Header />
       <SearchBar />
       <AlphabetNav />
-      <div className="rounded-lg border p-4">
-        <GlossaryList initialTerms={TERMS} />
-      </div>
+      <GlossaryList initialTerms={TERMS} />
     </div>
   );
 }

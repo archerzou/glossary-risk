@@ -39,7 +39,7 @@ export function GlossaryList({ initialTerms }: GlossaryListProps) {
         .map((letter) => (
           <section key={letter} id={`letter-${letter}`} className="space-y-4 scroll-mt-24">
             <h2 className="text-2xl font-bold border-b pb-2">{letter}</h2>
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="grid gap-6">
               {groupedTerms[letter].map((term) => (
                 <TermCard
                   key={term.id}
