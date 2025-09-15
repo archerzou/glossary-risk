@@ -5,16 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { X, Search } from "lucide-react";
 
-const CATEGORIES = ["All", "Content Marketing", "SEO", "Artificial Intelligence"];
-
 export function SearchBar() {
-  const {
-    searchTerm,
-    setSearchTerm,
-    clearSearch,
-    selectedCategory,
-    setSelectedCategory,
-  } = useGlossaryStore();
+  const { searchTerm, setSearchTerm, clearSearch } = useGlossaryStore();
 
   return (
     <div className="rounded-lg border p-4 bg-card">
@@ -40,25 +32,6 @@ export function SearchBar() {
             <X className="h-4 w-4" />
           </Button>
         ) : null}
-      </div>
-
-      <div className="flex flex-wrap gap-2 mt-4">
-        {CATEGORIES.map((c) => {
-          const key = c.toLowerCase() === "all" ? "all" : c;
-          const active = (selectedCategory === "all" && c === "All") || selectedCategory === c;
-          return (
-            <Button
-              key={c}
-              variant={active ? "default" : "outline"}
-              size="sm"
-              onClick={() => {
-                setSelectedCategory(key);
-              }}
-            >
-              {c}
-            </Button>
-          );
-        })}
       </div>
     </div>
   );

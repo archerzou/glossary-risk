@@ -11,6 +11,7 @@ interface GlossaryListProps {
 
 export function GlossaryList({ initialTerms }: GlossaryListProps) {
   const { setTerms, filteredTerms } = useGlossaryStore();
+  const { searchTerm, selectedLetter } = useGlossaryStore();
 
   const [groupedTerms, setGroupedTerms] = useState<Record<string, GlossaryTerm[]>>({});
 
@@ -29,7 +30,7 @@ export function GlossaryList({ initialTerms }: GlossaryListProps) {
       return acc;
     }, {} as Record<string, GlossaryTerm[]>);
     setGroupedTerms(grouped);
-  }, [filteredTerms]);
+  }, [filteredTerms, searchTerm, selectedLetter]);
 
   return (
     <div className="space-y-8">
@@ -38,12 +39,11 @@ export function GlossaryList({ initialTerms }: GlossaryListProps) {
         .map((letter) => (
           <section key={letter} id={`letter-${letter}`} className="space-y-4 scroll-mt-24">
             <h2 className="text-2xl font-bold border-b pb-2">{letter}</h2>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 lg:grid-cols-2">
               {groupedTerms[letter].map((term) => (
                 <TermCard
                   key={term.id}
                   term={term.term}
-                  category={term.category}
                   definition={term.definition}
                 />
               ))}
