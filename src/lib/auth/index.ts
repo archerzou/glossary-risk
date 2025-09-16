@@ -5,8 +5,7 @@ import { db } from '@/lib/db';
 import { account, session, user } from '@/lib/db/schema';
 import { and, eq } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
-
-const AUTH_COOKIE_NAME = 'auth_session';
+import { AUTH_COOKIE_NAME } from './constants';
 
 export async function getCurrentSession() {
   const cookieStore = await cookies();
@@ -83,5 +82,3 @@ export async function getAccountByEmail(email: string) {
 
   return { user: u, account: acc };
 }
-
-export { AUTH_COOKIE_NAME };
