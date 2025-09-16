@@ -1,5 +1,5 @@
 import { db } from '../src/lib/db';
-import { glossaryTerms } from '../src/lib/db/schema';
+import { glossaryTerms } from '../src/lib/db/schema/glossary-schema';
 
 const sampleTerms = [
   {
