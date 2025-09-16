@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Header } from "@/components/Header";
+import Header from "@/components/Header";
 
 export default function RootGroupLayout({ children }: { children: ReactNode }) {
   return (
