@@ -30,6 +30,7 @@ export async function signUp(formData: FormData) {
         password: data.password,
         name: data.name,
       },
+      headers: await headers(),
     });
 
     return { ok: true, userId: res.user?.id };
@@ -57,6 +58,7 @@ export async function signIn(formData: FormData) {
       email: data.email,
       password: data.password,
     },
+    headers: await headers(),
   });
 
   return { ok: true, userId: res.user?.id };
@@ -75,6 +77,6 @@ export async function getCurrentUser() {
 }
 
 export async function signOut() {
-  await auth.api.signOut({ headers: {} });
+  await auth.api.signOut({ headers: await headers() });
   return { ok: true };
 }
