@@ -1,5 +1,4 @@
 import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
-import { relations } from 'drizzle-orm';
 
 export const user = pgTable('user', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -38,31 +37,3 @@ export const session = pgTable('session', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
-
-export const userRelations = relations(user, ({ many }) => ({
-  accounts: many(account),
-  sessions: many(session),
-}));
-
-export const accountRelations = relations(account, ({ one }) => ({
-  user: one(user, {
-    fields: [account.userId],
-    references: [user.id],
-  }),
-}));
-
-export const sessionRelations = relations(session, ({ one }) => ({
-  user: one(user, {
-    fields: [session.userId],
-    references: [user.id],
-  }),
-}));
-
-export type User = typeof user.$inferSelect;
-export type NewUser = typeof user.$inferInsert;
-
-export type Account = typeof account.$inferSelect;
-export type NewAccount = typeof account.$inferInsert;
-
-export type Session = typeof session.$inferSelect;
-export type NewSession = typeof session.$inferInsert;
