@@ -19,7 +19,7 @@ export default function AuthForm({
 }: {
   mode?: Mode;
   className?: string;
-  onSubmit?: (formData: FormData) => Promise<{ ok?: boolean } | undefined | null>;
+  onSubmit?: (formData: FormData) => Promise<{ ok?: boolean; error?: string } | undefined | null>;
 }) {
   const router = useRouter();
 
@@ -28,9 +28,11 @@ export default function AuthForm({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>();
+  const [serverError, setServerError] = React.useState<string | null>(null);
 
   const handle = async (data: FormValues) => {
     if (!onSubmit) return;
+    setServerError(null);
     const fd = new FormData();
     if (mode === "sign-up" && data.name) fd.append("name", data.name);
     fd.append("email", data.email);
@@ -39,6 +41,8 @@ export default function AuthForm({
     const result = await onSubmit(fd);
     if (result?.ok) {
       router.push("/");
+    } else if (result && "error" in result && result.error) {
+      setServerError(result.error);
     }
   };
 
@@ -73,7 +77,14 @@ export default function AuthForm({
               <label htmlFor="name" className="text-sm font-medium">
                 Name
               </label>
-              <Input id="name" type="text" placeholder="Your name" aria-invalid={!!errors.name || undefined} {...register("name")} />
+              <Input
+                id="name"
+                type="text"
+                placeholder="Your name"
+                aria-invalid={!!errors.name || undefined}
+                {...register("name", { required: "Name is required" })}
+              />
+              {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
             </div>
           )}
           <div className="space-y-1.5">
@@ -101,13 +112,21 @@ export default function AuthForm({
               autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
               placeholder="••••••••"
               aria-invalid={!!errors.password || undefined}
-              {...register("password", { required: "Password is required", minLength: { value: 6, message: "Min 6 characters" } })}
+              {...register("password", {
+                required: "Password is required",
+                minLength: { value: 8, message: "Min 8 characters" },
+              })}
             />
             {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
           </div>
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             {submitLabel}
           </Button>
+          {serverError && (
+            <p className="text-sm text-destructive" role="alert">
+              {serverError}
+            </p>
+          )}
           <p className="text-sm text-muted-foreground">{switchText}</p>
         </form>
       </CardContent>

@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
 
-const emailSchema = z.email();
+const emailSchema = z.string().email();
 const passwordSchema = z.string().min(8).max(128);
 const nameSchema = z.string().min(1).max(100);
 
@@ -15,23 +15,28 @@ const signUpSchema = z.object({
 });
 
 export async function signUp(formData: FormData) {
-  const rawData = {
-    name: formData.get("name") as string,
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+  try {
+    const rawData = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
 
-  const data = signUpSchema.parse(rawData);
+    const data = signUpSchema.parse(rawData);
 
-  const res = await auth.api.signUpEmail({
-    body: {
-      email: data.email,
-      password: data.password,
-      name: data.name,
-    },
-  });
+    const res = await auth.api.signUpEmail({
+      body: {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+      },
+    });
 
-  return { ok: true, userId: res.user?.id };
+    return { ok: true, userId: res.user?.id };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to create user";
+    return { ok: false, error: message as string };
+  }
 }
 
 const signInSchema = z.object({
