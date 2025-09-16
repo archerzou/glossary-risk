@@ -5,7 +5,7 @@ import { FiUser } from "react-icons/fi";
 
 type User = { id: string; name?: string | null; email?: string | null } | null;
 
-export default function HeaderClient({
+export default function User({
   user,
   signOutAction,
 }: {
@@ -15,7 +15,7 @@ export default function HeaderClient({
   const displayName = user?.name ?? user?.email ?? "User";
   return (
     <header className="w-full border-b bg-background">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         <Link href="/" className="text-3xl font-bold tracking-tight">
           Glossary
         </Link>
