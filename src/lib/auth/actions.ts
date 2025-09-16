@@ -22,7 +22,12 @@ export async function signUp(formData: FormData) {
       password: formData.get("password") as string,
     };
 
-    const data = signUpSchema.parse(rawData);
+    const parsed = signUpSchema.safeParse(rawData);
+    if (!parsed.success) {
+      const first = parsed.error.issues[0];
+      return { ok: false, error: first?.message || "Invalid sign-up data" };
+    }
+    const data = parsed.data;
 
     const res = await auth.api.signUpEmail({
       body: {
@@ -34,9 +39,8 @@ export async function signUp(formData: FormData) {
     });
 
     return { ok: true, userId: res.user?.id };
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Failed to create user";
-    return { ok: false, error: message as string };
+  } catch {
+    return { ok: false, error: "Failed to create user" };
   }
 }
 
@@ -46,22 +50,31 @@ const signInSchema = z.object({
 });
 
 export async function signIn(formData: FormData) {
-  const rawData = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+  try {
+    const rawData = {
+      email: formData.get("email") as string,
+      password: formData.get("password") as string,
+    };
 
-  const data = signInSchema.parse(rawData);
+    const parsed = signInSchema.safeParse(rawData);
+    if (!parsed.success) {
+      const first = parsed.error.issues[0];
+      return { ok: false, error: first?.message || "Invalid credentials" };
+    }
+    const data = parsed.data;
 
-  const res = await auth.api.signInEmail({
-    body: {
-      email: data.email,
-      password: data.password,
-    },
-    headers: await headers(),
-  });
+    const res = await auth.api.signInEmail({
+      body: {
+        email: data.email,
+        password: data.password,
+      },
+      headers: await headers(),
+    });
 
-  return { ok: true, userId: res.user?.id };
+    return { ok: true, userId: res.user?.id };
+  } catch {
+    return { ok: false, error: "Invalid email or password" };
+  }
 }
 
 export async function getCurrentUser() {
