@@ -1,0 +1,1 @@
+ALTER TABLE "account" ADD COLUMN "provider_id" text NOT NULL;
