@@ -3,6 +3,7 @@ import { Header } from "@/components/glossary/Header";
 import { AlphabetNav } from "@/components/glossary/AlphabetNav";
 import { SearchBar } from "@/components/glossary/SearchBar";
 import { GlossaryTerm } from "@/lib/db/schema";
+import {getCurrentUser} from "@/lib/auth/actions";
 
 const TERMS: GlossaryTerm[] = [
     {
@@ -79,7 +80,10 @@ const TERMS: GlossaryTerm[] = [
     },
 ];
 
-export default function Home() {
+export default async function Home() {
+    const user = await getCurrentUser();
+
+    console.log('user', user);
   return (
     <div className="space-y-6">
       <Header />
