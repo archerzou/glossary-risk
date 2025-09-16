@@ -1,6 +1,7 @@
+import type { ReactNode } from "react";
 import { AppHeader } from "@/components/app-header";
 
-export default function RootGroupLayout({ children }: { children: React.ReactNode }) {
+export default function RootGroupLayout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-dvh flex flex-col">
       <AppHeader />
