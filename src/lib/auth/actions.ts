@@ -4,7 +4,6 @@ import { z } from 'zod';
 import { hash, compare } from 'bcryptjs';
 import { db } from '@/lib/db';
 import { account, user } from '@/lib/db/schema';
-import { createSession, destroySession, getCurrentSession } from './index';
 import { and, eq } from 'drizzle-orm';
 
 const signUpSchema = z.object({
@@ -18,8 +17,13 @@ const signInSchema = z.object({
   password: z.string().min(8),
 });
 
-export async function signUp(input: z.infer<typeof signUpSchema>) {
-  const data = signUpSchema.parse(input);
+export async function signUp(formData: FormData) {
+  const raw = {
+    name: formData.get('name') as string | undefined,
+    email: formData.get('email') as string,
+    password: formData.get('password') as string,
+  };
+  const data = signUpSchema.parse(raw);
 
   const existing = await db.query.user.findFirst({
     where: (u, { eq }) => eq(u.email, data.email),
@@ -44,13 +48,15 @@ export async function signUp(input: z.infer<typeof signUpSchema>) {
     password: passwordHash,
   });
 
-  await createSession(createdUser.id, 1000 * 60 * 60 * 24 * 30);
-
   return { ok: true, userId: createdUser.id };
 }
 
-export async function signIn(input: z.infer<typeof signInSchema>) {
-  const data = signInSchema.parse(input);
+export async function signIn(formData: FormData) {
+  const raw = {
+    email: formData.get('email') as string,
+    password: formData.get('password') as string,
+  };
+  const data = signInSchema.parse(raw);
 
   const [u] = await db.select().from(user).where(eq(user.email, data.email)).limit(1);
   if (!u) {
@@ -72,15 +78,9 @@ export async function signIn(input: z.infer<typeof signInSchema>) {
     throw new Error('Invalid email or password');
   }
 
-  await createSession(u.id, 1000 * 60 * 60 * 24 * 30);
-
   return { ok: true, userId: u.id };
 }
 
 export async function signOut() {
-  const sess = await getCurrentSession();
-  if (!sess) return { ok: true };
-
-  await destroySession(sess.token);
   return { ok: true };
 }

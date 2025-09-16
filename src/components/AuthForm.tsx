@@ -3,29 +3,49 @@
 import React from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-type Mode = "signin" | "signup";
+type Mode = "sign-in" | "sign-up";
 type FormValues = { name?: string; email: string; password: string };
 
-export function AuthForm({ mode = "signin", className }: { mode?: Mode; className?: string }) {
+export default function AuthForm({
+  mode = "sign-in",
+  className,
+  onSubmit,
+}: {
+  mode?: Mode;
+  className?: string;
+  onSubmit?: (formData: FormData) => Promise<{ ok?: boolean } | undefined | null>;
+}) {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>();
 
-  const onSubmit = async (data: FormValues) => {
-    console.log(mode, data);
+  const handle = async (data: FormValues) => {
+    if (!onSubmit) return;
+    const fd = new FormData();
+    if (mode === "sign-up" && data.name) fd.append("name", data.name);
+    fd.append("email", data.email);
+    fd.append("password", data.password);
+
+    const result = await onSubmit(fd);
+    if (result?.ok) {
+      router.push("/");
+    }
   };
 
-  const title = mode === "signin" ? "Sign In" : "Sign Up";
-  const submitLabel = mode === "signin" ? "Sign In" : "Register";
+  const title = mode === "sign-in" ? "Sign In" : "Sign Up";
+  const submitLabel = mode === "sign-in" ? "Sign In" : "Register";
   const switchText =
-    mode === "signin" ? (
+    mode === "sign-in" ? (
       <>
         need to create an account?{" "}
         <Link className="underline underline-offset-4" href="/sign-up">
@@ -47,8 +67,8 @@ export function AuthForm({ mode = "signin", className }: { mode?: Mode; classNam
         <CardTitle className="text-2xl">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {mode === "signup" && (
+        <form onSubmit={handleSubmit(handle)} className="space-y-4">
+          {mode === "sign-up" && (
             <div className="space-y-1.5">
               <label htmlFor="name" className="text-sm font-medium">
                 Name
@@ -78,7 +98,7 @@ export function AuthForm({ mode = "signin", className }: { mode?: Mode; classNam
             <Input
               id="password"
               type="password"
-              autoComplete={mode === "signin" ? "current-password" : "new-password"}
+              autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
               placeholder="••••••••"
               aria-invalid={!!errors.password || undefined}
               {...register("password", { required: "Password is required", minLength: { value: 6, message: "Min 6 characters" } })}
