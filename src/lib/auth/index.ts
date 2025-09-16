@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/lib/db";
 import * as schema from "@/lib/db/schema";
-import { v4 as uuidv4 } from "uuid";
+import { randomUUID } from "crypto";
 import { nextCookies } from "better-auth/next-js";
 
 export const auth = betterAuth({
@@ -39,7 +39,7 @@ export const auth = betterAuth({
   },
   advanced: {
     database: {
-      generateId: () => uuidv4(),
+      generateId: () => randomUUID(),
     },
   },
   plugins: [nextCookies()],
