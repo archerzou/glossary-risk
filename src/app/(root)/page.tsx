@@ -1,5 +1,4 @@
 import { GlossaryList } from "@/components/glossary-list";
-import { Header } from "@/components/glossary/Header";
 import { AlphabetNav } from "@/components/glossary/AlphabetNav";
 import { SearchBar } from "@/components/glossary/SearchBar";
 import { GlossaryTerm } from "@/lib/db/schema";
@@ -86,7 +85,6 @@ export default async function Home() {
     console.log('user', user);
   return (
     <div className="space-y-6">
-      <Header />
       <SearchBar />
       <AlphabetNav />
       <GlossaryList initialTerms={TERMS} />

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FiUser } from "react-icons/fi";
 
-export function AppHeader() {
+export function Header() {
   const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export function AppHeader() {
   return (
     <header className="w-full border-b bg-background">
       <div className="container mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="text-lg font-semibold">
+        <Link href="/" className="text-3xl font-bold tracking-tight">
           Glossary
         </Link>
         <div className="flex items-center gap-3">
