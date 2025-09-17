@@ -1,16 +1,16 @@
 import { create } from 'zustand';
-import { GlossaryTerm } from '../db/schema';
+import { Term } from '../db/schema';
 
 interface GlossaryState {
-  terms: GlossaryTerm[];
+  terms: Term[];
   searchTerm: string;
   selectedLetter: string | null;
-  setTerms: (terms: GlossaryTerm[]) => void;
+  setTerms: (terms: Term[]) => void;
   setSearchTerm: (term: string) => void;
   setSelectedLetter: (letter: string | null) => void;
   clearSearch: () => void;
   clearSelectedLetter: () => void;
-  filteredTerms: () => GlossaryTerm[];
+  filteredTerms: () => Term[];
 }
 
 export const useGlossaryStore = create<GlossaryState>((set, get) => ({

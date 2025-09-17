@@ -68,12 +68,18 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 
 ## Database Schema
 
-The application uses a simple schema with a `glossary_terms` table containing:
-- `id`: UUID primary key
-- `term`: The glossary term
-- `definition`: Detailed definition
-- `createdAt` & `updatedAt`: Timestamps
-
+The application uses a normalized schema:
+- categories
+  - id: UUID primary key
+  - name: text, unique, not null
+  - created_at: timestamp, default now
+- terms
+  - id: UUID primary key
+  - term: text, not null
+  - definition: text, not null
+  - category_id: UUID, not null, foreign key -> categories.id
+  - created_at: timestamp, default now
+  - updated_at: timestamp, default now
 ## Available Scripts
 
 - `npm run dev` - Start development server with Turbopack
