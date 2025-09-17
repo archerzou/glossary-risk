@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { useGlossaryStore } from "@/lib/store/glossary";
-import type { GlossaryTerm } from "@/lib/db/schema";
+import type { Term } from "@/lib/db/schema";
 
 const LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
 
@@ -14,7 +14,7 @@ export function AlphabetNav() {
   const availability = useMemo(() => {
     const counts: Record<string, number> = {};
     LETTERS.forEach((l) => (counts[l] = 0));
-    const filteredBySearch = (terms as GlossaryTerm[]).filter((t: GlossaryTerm) => {
+    const filteredBySearch = (terms as Term[]).filter((t: Term) => {
       if (!searchTerm) return true;
       const q = searchTerm.toLowerCase();
       return (
@@ -22,7 +22,7 @@ export function AlphabetNav() {
         t.definition.toLowerCase().includes(q)
       );
     });
-    filteredBySearch.forEach((t: GlossaryTerm) => {
+    filteredBySearch.forEach((t: Term) => {
       const l = t.term.charAt(0).toUpperCase();
       if (counts[l] !== undefined) counts[l] += 1;
     });

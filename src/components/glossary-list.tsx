@@ -1,19 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { GlossaryTerm } from '@/lib/db/schema';
+import { Term } from '@/lib/db/schema';
 import { useGlossaryStore } from '@/lib/store/glossary';
 import { TermCard } from './glossary/term-card';
 
 interface GlossaryListProps {
-  initialTerms: GlossaryTerm[];
+  initialTerms: Term[];
 }
 
 export function GlossaryList({ initialTerms }: GlossaryListProps) {
   const { setTerms, filteredTerms } = useGlossaryStore();
   const { searchTerm, selectedLetter } = useGlossaryStore();
 
-  const [groupedTerms, setGroupedTerms] = useState<Record<string, GlossaryTerm[]>>({});
+  const [groupedTerms, setGroupedTerms] = useState<Record<string, Term[]>>({});
 
   useEffect(() => {
     setTerms(initialTerms);
@@ -28,7 +28,7 @@ export function GlossaryList({ initialTerms }: GlossaryListProps) {
       }
       acc[firstLetter].push(term);
       return acc;
-    }, {} as Record<string, GlossaryTerm[]>);
+    }, {} as Record<string, Term[]>);
     setGroupedTerms(grouped);
   }, [filteredTerms, searchTerm, selectedLetter]);
 
