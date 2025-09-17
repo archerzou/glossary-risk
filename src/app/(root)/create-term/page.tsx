@@ -1,11 +1,22 @@
-import type { Metadata } from "next";
-import { ClientCreateTerm } from "./client";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Create Term",
-  description: "Create a new glossary term",
-};
+import { TermForm } from "@/components/Term-Form";
+import { upsertTerm } from "@/lib/mock/terms";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  return <ClientCreateTerm />;
+  const router = useRouter();
+
+  return (
+      <TermForm
+          mode="create"
+          onSubmit={(values) => {
+            const id = crypto.randomUUID();
+            upsertTerm({ id, ...values });
+            router.push(`/terms/${id}`);
+          }}
+          title="Create a Term"
+          submitLabel="Submit"
+      />
+  );
 }
