@@ -1,15 +1,18 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Editor } from "@tinymce/tinymce-react";
 import { CATEGORIES } from "@/lib/types/term";
 import { cn } from "@/lib/utils";
+const Editor = dynamic(() => import("@tinymce/tinymce-react").then((m) => m.Editor), {
+  ssr: false,
+});
 
 const TermSchema = z.object({
   term: z.string().min(1, "Term name is required"),
