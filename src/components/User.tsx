@@ -25,24 +25,32 @@ export default function User({
               LogIn
             </Link>
           ) : (
-            <details className="relative">
-              <summary className="list-none cursor-pointer inline-flex items-center gap-2 px-3 h-9 rounded-full border bg-secondary text-secondary-foreground">
-                <FiUser className="h-4 w-4" />
-                <span className="hidden sm:inline max-w-48 truncate">{displayName}</span>
-              </summary>
-              <div className="absolute right-0 mt-2 min-w-40 rounded-md border bg-popover text-popover-foreground shadow-md z-50">
-                <div className="px-3 py-2 text-sm text-muted-foreground truncate max-w-64">{displayName}</div>
-                <div className="border-t" />
-                <form action={signOutAction} className="p-1">
-                  <button
-                    type="submit"
-                    className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
-                  >
-                    Sign out
-                  </button>
-                </form>
-              </div>
-            </details>
+            <>
+              <Link
+                href="/create-term"
+                className="inline-flex items-center rounded-md bg-primary px-3 h-9 text-primary-foreground text-sm hover:opacity-90"
+              >
+                Create Term
+              </Link>
+              <details className="relative">
+                <summary className="list-none cursor-pointer inline-flex items-center gap-2 px-3 h-9 rounded-full border bg-secondary text-secondary-foreground">
+                  <FiUser className="h-4 w-4" />
+                  <span className="hidden sm:inline max-w-48 truncate">{displayName}</span>
+                </summary>
+                <div className="absolute right-0 mt-2 min-w-40 rounded-md border bg-popover text-popover-foreground shadow-md z-50">
+                  <div className="px-3 py-2 text-sm text-muted-foreground truncate max-w-64">{displayName}</div>
+                  <div className="border-t" />
+                  <form action={signOutAction} className="p-1">
+                    <button
+                      type="submit"
+                      className="w-full text-left px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
+                    >
+                      Sign out
+                    </button>
+                  </form>
+                </div>
+              </details>
+            </>
           )}
         </div>
       </div>
