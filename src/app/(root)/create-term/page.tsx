@@ -17,7 +17,7 @@ export default async function Page() {
   return (
     <TermForm
       mode="create"
-      onSubmit={onSubmit}
+      onSubmitAction={onSubmit}
       title="Create a Term"
       submitLabel="Submit"
       categories={categories.map(c => ({ id: c.id, name: c.name }))}

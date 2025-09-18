@@ -24,7 +24,7 @@ export type TermFormValues = z.infer<typeof TermSchema>;
 export function TermForm({
   mode,
   defaultValues,
-  onSubmit,
+  onSubmitAction,
   submitLabel,
   className,
   title,
@@ -32,7 +32,7 @@ export function TermForm({
 }: {
   mode: "create" | "edit";
   defaultValues?: Partial<TermFormValues>;
-  onSubmit: (values: TermFormValues) => Promise<void> | void;
+  onSubmitAction: (values: TermFormValues) => Promise<void> | void;
   submitLabel?: string;
   className?: string;
   title?: string;
@@ -49,7 +49,7 @@ export function TermForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(async (v) => { await onSubmit(v); })} className={cn("space-y-6", className)}>
+      <form onSubmit={form.handleSubmit(async (v) => { await onSubmitAction(v); })} className={cn("space-y-6", className)}>
         <h1 className="text-3xl font-semibold">{title ?? (mode === "create" ? "Create a Term" : "Edit Term")}</h1>
 
         <FormField
