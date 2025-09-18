@@ -15,11 +15,11 @@ type FormValues = { name?: string; email: string; password: string };
 export default function AuthForm({
   mode = "sign-in",
   className,
-  onSubmit,
+  onSubmitAction,
 }: {
   mode?: Mode;
   className?: string;
-  onSubmit?: (formData: FormData) => Promise<{ ok?: boolean; error?: string } | undefined | null>;
+  onSubmitAction?: (formData: FormData) => Promise<{ ok?: boolean; error?: string } | undefined | null>;
 }) {
   const router = useRouter();
 
@@ -31,14 +31,14 @@ export default function AuthForm({
   const [serverError, setServerError] = React.useState<string | null>(null);
 
   const handle = async (data: FormValues) => {
-    if (!onSubmit) return;
+    if (!onSubmitAction) return;
     setServerError(null);
     const fd = new FormData();
     if (mode === "sign-up" && data.name) fd.append("name", data.name);
     fd.append("email", data.email);
     fd.append("password", data.password);
 
-    const result = await onSubmit(fd);
+    const result = await onSubmitAction(fd);
     if (result?.ok) {
       router.push("/");
     } else if (result && "error" in result && result.error) {

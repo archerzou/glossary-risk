@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     <TermForm
       mode="edit"
       defaultValues={defaultValues}
-      onSubmit={onSubmit}
+      onSubmitAction={onSubmit}
       title="Edit Term"
       submitLabel="Save"
       categories={categories.map(c => ({ id: c.id, name: c.name }))}
