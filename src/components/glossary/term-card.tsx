@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import ParseHTML from "@/components/ParseHTML";
+import parse from "html-react-parser";
 
 type Props = {
   term: string;
@@ -15,7 +15,7 @@ export function TermCard({ term, definition }: Props) {
         <CardTitle className="text-lg">{term}</CardTitle>
       </CardHeader>
       <CardContent>
-        <ParseHTML data={definition} />
+        <div className="text-base leading-relaxed text-foreground/80">{parse(definition)}</div>
       </CardContent>
     </Card>
   );
