@@ -1,22 +1,26 @@
-"use client";
-
 import { TermForm } from "@/components/Term-Form";
-import { upsertTerm } from "@/lib/mock/terms";
-import { useRouter } from "next/navigation";
+import { createTerm } from "@/lib/actions/terms";
+import { getCategories } from "@/lib/actions/categories";
+import { redirect } from "next/navigation";
+export const dynamic = 'force-dynamic';
 
-export default function Page() {
-  const router = useRouter();
+
+export default async function Page() {
+  const categories = await getCategories();
+
+  async function onSubmit(values: { term: string; definition: string; categoryId: string }) {
+    "use server";
+    const { id } = await createTerm(values);
+    redirect(`/terms/${id}`);
+  }
 
   return (
-      <TermForm
-          mode="create"
-          onSubmit={(values) => {
-            const id = crypto.randomUUID();
-            upsertTerm({ id, ...values });
-            router.push(`/terms/${id}`);
-          }}
-          title="Create a Term"
-          submitLabel="Submit"
-      />
+    <TermForm
+      mode="create"
+      onSubmit={onSubmit}
+      title="Create a Term"
+      submitLabel="Submit"
+      categories={categories.map(c => ({ id: c.id, name: c.name }))}
+    />
   );
 }
