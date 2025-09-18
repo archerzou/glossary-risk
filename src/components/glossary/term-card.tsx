@@ -1,6 +1,8 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import parse from "html-react-parser";
+import DOMPurify from "isomorphic-dompurify";
 
 type Props = {
   term: string;
@@ -14,7 +16,7 @@ export function TermCard({ term, definition }: Props) {
         <CardTitle className="text-lg">{term}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-base leading-relaxed text-foreground/80">{definition}</p>
+        <div className="max-w-none text-foreground/80 [&_ol]:list-decimal [&_ul]:list-disc [&_li]:ml-6">{parse(DOMPurify.sanitize(definition))}</div>
       </CardContent>
     </Card>
   );
