@@ -8,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES } from "@/lib/types/term";
 import { cn } from "@/lib/utils";
 const Editor = dynamic(() => import("@tinymce/tinymce-react").then((m) => m.Editor), {
   ssr: false,
@@ -29,6 +28,7 @@ export function TermForm({
   submitLabel,
   className,
   title,
+  categories,
 }: {
   mode: "create" | "edit";
   defaultValues?: Partial<TermFormValues>;
@@ -36,6 +36,7 @@ export function TermForm({
   submitLabel?: string;
   className?: string;
   title?: string;
+  categories: { id: string; name: string }[];
 }) {
   const form = useForm<TermFormValues>({
     resolver: zodResolver(TermSchema),
@@ -129,7 +130,7 @@ export function TermForm({
                   <option value="" disabled>
                     Select a category
                   </option>
-                  {CATEGORIES.map((c) => (
+                  {categories.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}
                     </option>
