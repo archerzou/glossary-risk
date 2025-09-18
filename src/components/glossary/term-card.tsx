@@ -15,7 +15,7 @@ export function TermCard({ term, definition }: Props) {
         <CardTitle className="text-lg">{term}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="prose max-w-none prose-ol:list-decimal prose-ul:list-disc text-foreground/80">{parse(definition)}</div>
+        <div className="max-w-none text-foreground/80 [&_ol]:list-decimal [&_ul]:list-disc [&_li]:ml-6">{parse(definition)}</div>
       </CardContent>
     </Card>
   );
