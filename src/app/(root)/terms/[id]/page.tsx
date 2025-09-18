@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTermById } from "@/lib/actions/terms";
+import ParseHTML from "@/components/ParseHTML";
 export const dynamic = 'force-dynamic';
 
 
@@ -23,7 +24,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   return (
     <article className="prose max-w-none">
       <h1 className="text-3xl font-semibold">{term.term}</h1>
-      <div className="mt-4" dangerouslySetInnerHTML={{ __html: term.definition }} />
+      <div className="mt-4"><ParseHTML data={term.definition} /></div>
     </article>
   );
 }
