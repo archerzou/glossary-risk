@@ -1,6 +1,8 @@
 "use client";
 
-import { ReactNode } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { deleteTerm } from "@/lib/actions/terms";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -16,57 +18,64 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 
 type DeleteDialogProps = {
+  termId: string;
   triggerClassName?: string;
   title?: string;
   description?: string;
   confirmLabel?: string;
   cancelLabel?: string;
-  actionButtonProps?: React.ComponentProps<typeof Button>;
-  children?: ReactNode;
-  submitOnConfirm?: boolean;
-  formId?: string;
 };
 
 export function DeleteDialog({
-  triggerClassName,
-  title = "Delete term?",
-  description = "This action cannot be undone.",
-  confirmLabel = "Delete",
-  cancelLabel = "Cancel",
-  actionButtonProps,
-  children,
-  submitOnConfirm = true,
-  formId,
-}: DeleteDialogProps) {
+                               termId,
+                               triggerClassName,
+                               title = "Delete term?",
+                               description = "This action cannot be undone.",
+                               confirmLabel = "Delete",
+                               cancelLabel = "Cancel",
+                             }: DeleteDialogProps) {
+  const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await deleteTerm(termId);
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      console.error("Failed to delete term:", error);
+      setIsDeleting(false);
+    }
+  };
+
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant="destructive" className={triggerClassName}>
-          <Trash />
-          Delete
-        </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
-        </AlertDialogHeader>
-        {children}
-        <AlertDialogFooter>
-          <AlertDialogCancel>{cancelLabel}</AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <Button
-              variant="destructive"
-              type={submitOnConfirm ? "submit" : "button"}
-              form={formId}
-              {...actionButtonProps}
-            >
-              <Trash />
-              {confirmLabel}
-            </Button>
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="destructive" className={triggerClassName}>
+            <Trash />
+            Delete
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{title}</AlertDialogTitle>
+            <AlertDialogDescription>{description}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>{cancelLabel}</AlertDialogCancel>
+            <AlertDialogAction asChild>
+              <Button
+                  variant="destructive"
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+              >
+                <Trash />
+                {isDeleting ? "Deleting..." : confirmLabel}
+              </Button>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
   );
 }

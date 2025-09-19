@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { deleteTerm, getTermById } from "@/lib/actions/terms";
+import { getTermById } from "@/lib/actions/terms";
 import { Button } from "@/components/ui/button";
 import { DeleteDialog } from "@/components/DeleteDialog";
 import { BackButton } from "@/components/BackButton";
@@ -27,16 +26,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   }
   const term = data.term;
 
-  async function onDelete() {
-    "use server";
-    await deleteTerm(id);
-    redirect("/");
-  }
-
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <header className="flex items-end justify-between">
-        <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight">{term.term}</h1>
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">{term.term}</h1>
         <div className="flex items-center gap-3">
           <Link href={`/terms/edit/${id}`}>
             <Button variant="outline">
@@ -44,8 +37,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               Edit
             </Button>
           </Link>
-          <form id="delete-form" action={onDelete}></form>
-          <DeleteDialog formId="delete-form" />
+          {/*<form id="delete-form" action={onDelete}></form>*/}
+          <DeleteDialog termId={id} />
         </div>
       </header>
 
