@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <header className="flex items-end justify-between">
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">{term.term}</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{term.term}</h1>
         <div className="flex items-center gap-3">
           <Link href={`/terms/edit/${id}`}>
             <Button variant="outline">
