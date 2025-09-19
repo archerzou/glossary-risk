@@ -24,6 +24,7 @@ type DeleteDialogProps = {
   actionButtonProps?: React.ComponentProps<typeof Button>;
   children?: ReactNode;
   submitOnConfirm?: boolean;
+  formId?: string;
 };
 
 export function DeleteDialog({
@@ -35,6 +36,7 @@ export function DeleteDialog({
   actionButtonProps,
   children,
   submitOnConfirm = true,
+  formId,
 }: DeleteDialogProps) {
   return (
     <AlertDialog>
@@ -56,6 +58,7 @@ export function DeleteDialog({
             <Button
               variant="destructive"
               type={submitOnConfirm ? "submit" : "button"}
+              form={formId}
               {...actionButtonProps}
             >
               <Trash />

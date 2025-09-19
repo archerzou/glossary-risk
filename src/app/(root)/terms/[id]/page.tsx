@@ -5,7 +5,7 @@ import { deleteTerm, getTermById } from "@/lib/actions/terms";
 import { Button } from "@/components/ui/button";
 import { DeleteDialog } from "@/components/DeleteDialog";
 import { BackButton } from "@/components/BackButton";
-import { Pencil, Square } from "lucide-react";
+import { Pencil, BookOpen } from "lucide-react";
 import parse from "html-react-parser";
 export const dynamic = 'force-dynamic';
 
@@ -44,9 +44,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               Edit
             </Button>
           </Link>
-          <form action={onDelete}>
-            <DeleteDialog />
-          </form>
+          <form id="delete-form" action={onDelete}></form>
+          <DeleteDialog formId="delete-form" />
         </div>
       </header>
 
@@ -54,7 +53,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
       <section className="mt-8">
         <div className="flex items-center gap-2 text-xl font-semibold">
-          <Square className="text-foreground/80" />
+          <BookOpen className="text-foreground/80" />
           <span>Definition</span>
         </div>
         <div className="mt-4 prose max-w-none">{parse(term.definition)}</div>
