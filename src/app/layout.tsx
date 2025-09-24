@@ -7,8 +7,8 @@ export const metadata: Metadata = {
     default: "Glossary | Risk Analysis",
   },
   description:
-    "The Risk Analysis Glossary of risk-related terminology offers different perspectives and a systematic separation between overall qualitative concepts and their measurements",
-  keywords: ["glossary", "risk", "terminology", "analysis"],
+    "The Risk Analysis Glossary from the Society for Risk Analysis - Society for Risk Analysis",
+  keywords: ["glossary", "risk", "terminology", "analysis"]
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
