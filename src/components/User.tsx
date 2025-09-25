@@ -15,7 +15,7 @@ export default function User({
 }) {
   const displayName = user?.name ?? user?.email ?? "User";
   return (
-    <header className="w-full relative">
+    <header className="w-full relative h-32">
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/about-sra-bg.jpg"
@@ -26,23 +26,25 @@ export default function User({
           sizes="100vw"
         />
       </div>
-      <div className="relative z-10 bg-white/90 backdrop-blur-sm">
-        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+      <div className="relative z-10 bg-white/90 backdrop-blur-sm h-full">
+        <div className="container mx-auto px-4 h-full flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Image
-              src="/logo.svg"
-              alt="SRA Logo"
-              width={60}
-              height={60}
-              className="h-12 w-auto"
-            />
-            <Link href="/" className="text-2xl font-bold tracking-tight" style={{ color: '#C41E3A' }}>
+            <Link href="/" className="cursor-pointer">
+              <Image
+                src="/logo.svg"
+                alt="SRA Logo"
+                width={60}
+                height={60}
+                className="h-12 w-auto hover:opacity-80 transition-opacity"
+              />
+            </Link>
+            <Link href="/" className="text-2xl font-bold tracking-tight text-[var(--sra-primary-red)]">
               RISK ANALYSIS GLOSSARY
             </Link>
           </div>
           <div className="flex items-center gap-3">
             {!user ? (
-              <Link href="/sign-in" className="text-sm font-semibold uppercase tracking-wide" style={{ color: '#8B1538' }}>
+              <Link href="/sign-in" className="text-sm font-semibold uppercase tracking-wide text-[var(--sra-dark-red)]">
                 LOGIN
               </Link>
             ) : (
