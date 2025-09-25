@@ -43,6 +43,7 @@ export function GlossaryList({ initialTerms }: GlossaryListProps) {
               {groupedTerms[letter].map((term) => (
                 <TermCard
                   key={term.id}
+                  id={term.id}
                   term={term.term}
                   definition={term.definition}
                 />
