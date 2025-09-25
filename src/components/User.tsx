@@ -15,18 +15,18 @@ export default function User({
 }) {
   const displayName = user?.name ?? user?.email ?? "User";
   return (
-    <header className="w-full relative h-32">
+    <header className="w-full relative h-64">
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/about-sra-bg.jpg"
           alt="SRA Background"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
           sizes="100vw"
         />
       </div>
-      <div className="relative z-10 bg-white/90 backdrop-blur-sm h-full">
+      <div className="relative z-10 bg-white/40 backdrop-blur-sm h-full">
         <div className="container mx-auto px-4 h-full flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/" className="cursor-pointer">
@@ -38,13 +38,13 @@ export default function User({
                 className="h-12 w-auto hover:opacity-80 transition-opacity"
               />
             </Link>
-            <Link href="/" className="text-2xl font-bold tracking-tight text-[var(--sra-primary-red)]">
+            <Link href="/" className="text-2xl font-bold tracking-tight" style={{ color: 'var(--sra-primary-red)' }}>
               RISK ANALYSIS GLOSSARY
             </Link>
           </div>
           <div className="flex items-center gap-3">
             {!user ? (
-              <Link href="/sign-in" className="text-sm font-semibold uppercase tracking-wide text-[var(--sra-dark-red)]">
+              <Link href="/sign-in" className="text-base font-semibold uppercase tracking-wide" style={{ color: 'var(--sra-dark-red)' }}>
                 LOGIN
               </Link>
             ) : (

@@ -17,7 +17,8 @@ export function TermCard({ id, term, definition }: Props) {
         <CardTitle className="text-lg">
           <Link 
             href={`/terms/${id}`} 
-            className="hover:underline transition-colors text-[var(--sra-primary-red)]"
+            className="hover:underline transition-colors"
+            style={{ color: 'var(--sra-primary-red)' }}
           >
             {term}
           </Link>
