@@ -52,7 +52,7 @@ export function DeleteDialog({
   return (
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" className={triggerClassName}>
+          <Button variant="destructive" className={triggerClassName} style={{ backgroundColor: 'var(--sra-primary-red)' }}>
             <Trash />
             Delete
           </Button>
@@ -69,6 +69,7 @@ export function DeleteDialog({
                   variant="destructive"
                   onClick={handleDelete}
                   disabled={isDeleting}
+                  style={{ backgroundColor: 'var(--sra-primary-red)' }}
               >
                 <Trash />
                 {isDeleting ? "Deleting..." : confirmLabel}

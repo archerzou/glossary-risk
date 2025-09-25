@@ -37,7 +37,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               Edit
             </Button>
           </Link>
-          {/*<form id="delete-form" action={onDelete}></form>*/}
           <DeleteDialog termId={id} />
         </div>
       </header>
