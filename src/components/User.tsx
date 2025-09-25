@@ -38,13 +38,13 @@ export default function User({
                 className="h-12 w-auto hover:opacity-80 transition-opacity"
               />
             </Link>
-            <Link href="/" className="text-2xl font-bold tracking-tight text-[var(--sra-primary-red)]">
+            <Link href="/" className="text-2xl font-bold tracking-tight" style={{ color: 'var(--sra-primary-red)' }}>
               RISK ANALYSIS GLOSSARY
             </Link>
           </div>
           <div className="flex items-center gap-3">
             {!user ? (
-              <Link href="/sign-in" className="text-sm font-semibold uppercase tracking-wide text-[var(--sra-dark-red)]">
+              <Link href="/sign-in" className="text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--sra-dark-red)' }}>
                 LOGIN
               </Link>
             ) : (
