@@ -44,7 +44,7 @@ export default function User({
           </div>
           <div className="flex items-center gap-3">
             {!user ? (
-              <Link href="/sign-in" className="text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--sra-dark-red)' }}>
+              <Link href="/sign-in" className="text-base font-semibold uppercase tracking-wide" style={{ color: 'var(--sra-dark-red)' }}>
                 LOGIN
               </Link>
             ) : (
