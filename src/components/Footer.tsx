@@ -38,20 +38,20 @@ export default function Footer() {
           
           <div className="space-y-6">
             <div className="flex justify-end gap-4">
-              <Link href="#" className="hover:opacity-80 transition-opacity">
-                <Twitter className="h-6 w-6" />
+              <Link href="#" className="hover:opacity-80 transition-opacity" aria-label="Follow SRA on Twitter">
+                <Twitter className="h-6 w-6" aria-hidden="true" />
               </Link>
-              <Link href="#" className="hover:opacity-80 transition-opacity">
-                <Facebook className="h-6 w-6" />
+              <Link href="#" className="hover:opacity-80 transition-opacity" aria-label="Follow SRA on Facebook">
+                <Facebook className="h-6 w-6" aria-hidden="true" />
               </Link>
-              <Link href="#" className="hover:opacity-80 transition-opacity">
-                <Linkedin className="h-6 w-6" />
+              <Link href="#" className="hover:opacity-80 transition-opacity" aria-label="Follow SRA on LinkedIn">
+                <Linkedin className="h-6 w-6" aria-hidden="true" />
               </Link>
-              <Link href="#" className="hover:opacity-80 transition-opacity">
-                <Youtube className="h-6 w-6" />
+              <Link href="#" className="hover:opacity-80 transition-opacity" aria-label="Follow SRA on YouTube">
+                <Youtube className="h-6 w-6" aria-hidden="true" />
               </Link>
-              <Link href="#" className="hover:opacity-80 transition-opacity">
-                <Instagram className="h-6 w-6" />
+              <Link href="#" className="hover:opacity-80 transition-opacity" aria-label="Follow SRA on Instagram">
+                <Instagram className="h-6 w-6" aria-hidden="true" />
               </Link>
             </div>
             
