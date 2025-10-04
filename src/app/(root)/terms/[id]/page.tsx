@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTermById } from "@/lib/actions/terms";
+import { getCurrentUser } from "@/lib/auth/actions";
 import { Button } from "@/components/ui/button";
 import { DeleteDialog } from "@/components/DeleteDialog";
 import { BackButton } from "@/components/BackButton";
@@ -21,6 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const data = await getTermById(id);
+  const user = await getCurrentUser();
   if (!data) {
     return <div className="prose max-w-none"><h1>Term not found</h1></div>;
   }
@@ -30,15 +32,17 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
       <header className="flex items-end justify-between">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{term.term}</h1>
-        <div className="flex items-center gap-3">
-          <Link href={`/terms/edit/${id}`}>
-            <Button variant="outline">
-              <Pencil />
-              Edit
-            </Button>
-          </Link>
-          <DeleteDialog termId={id} />
-        </div>
+        {user?.emailVerified && (
+          <div className="flex items-center gap-3">
+            <Link href={`/terms/edit/${id}`}>
+              <Button variant="outline">
+                <Pencil />
+                Edit
+              </Button>
+            </Link>
+            <DeleteDialog termId={id} />
+          </div>
+        )}
       </header>
 
       <hr className="mt-6 border-border" />

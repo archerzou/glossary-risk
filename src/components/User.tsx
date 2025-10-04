@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FiUser } from "react-icons/fi";
 
-type User = { id: string; name?: string | null; email?: string | null } | null;
+type User = { id: string; name?: string | null; email?: string | null; emailVerified?: boolean | null } | null;
 
 export default function User({
   user,
@@ -49,12 +49,14 @@ export default function User({
               </Link>
             ) : (
               <>
-                <Link
-                  href="/create-term"
-                  className="inline-flex items-center rounded-md bg-primary px-3 h-9 text-primary-foreground text-sm hover:opacity-90"
-                >
-                  Create Term
-                </Link>
+                {user.emailVerified && (
+                  <Link
+                    href="/create-term"
+                    className="inline-flex items-center rounded-md bg-primary px-3 h-9 text-primary-foreground text-sm hover:opacity-90"
+                  >
+                    Create Term
+                  </Link>
+                )}
                 <details className="relative">
                   <summary className="list-none cursor-pointer inline-flex items-center gap-2 px-3 h-9 rounded-full border bg-secondary text-secondary-foreground">
                     <FiUser className="h-4 w-4" />
