@@ -83,7 +83,7 @@ export function TermForm({
                   onBlur={field.onBlur}
                   onEditorChange={(content) => field.onChange(content)}
                   init={{
-                    height: 380,
+                    height: 500,
                     menubar: true,
                     plugins: [
                       "advlist",
@@ -106,7 +106,7 @@ export function TermForm({
                       "wordcount",
                     ],
                     toolbar:
-                      "undo redo | blocks | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | code | help",
+                      "undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
                     content_style:
                       "body { font-family: Inter, Helvetica, Arial, sans-serif; font-size: 16px }",
                   }}

@@ -13,7 +13,7 @@ type Props = {
 export function TermCard({ id, term, definition }: Props) {
   return (
     <Card className="hover:shadow-sm transition-shadow">
-      <CardHeader className="pb-2">
+      <CardHeader className="pb-1">
         <CardTitle className="text-lg">
           <Link 
             href={`/terms/${id}`} 
