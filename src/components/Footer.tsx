@@ -69,7 +69,7 @@ export default function Footer() {
             </div>
 
             <div className="space-y-6">
-              <div className="flex justify-end gap-4">
+              <div className="flex justify-start md:justify-end gap-4">
                 <Link href="#" className="hover:opacity-80 transition-opacity" aria-label="Follow SRA on Twitter">
                   <TwitterIcon />
                 </Link>
@@ -87,7 +87,7 @@ export default function Footer() {
                 </Link>
               </div>
 
-              <div className="text-right space-y-2">
+              <div className="text-left md:text-right space-y-2">
                 <div className="space-y-1 text-sm font-semibold uppercase tracking-wide">
                   <Link href="https://www.sra.org/risk-analysis-introduction/" className="block hover:underline">
                     RISK ANALYSIS INTRODUCTION

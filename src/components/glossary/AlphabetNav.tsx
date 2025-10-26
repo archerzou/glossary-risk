@@ -8,7 +8,7 @@ import type { Term } from "@/lib/db/schema";
 const LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
 
 export function AlphabetNav() {
-  const { setSelectedLetter, selectedLetter, clearSearch } = useGlossaryStore();
+  const { setSelectedLetter, selectedLetter, clearSearch, clearSelectedLetter } = useGlossaryStore();
   const { terms, searchTerm } = useGlossaryStore();
 
   const availability = useMemo(() => {
@@ -32,6 +32,17 @@ export function AlphabetNav() {
   return (
     <div className="rounded-lg border p-2 bg-card overflow-x-auto">
       <div className="flex items-center gap-1 min-w-[640px] md:min-w-0">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            clearSelectedLetter();
+          }}
+          aria-label="Show all results"
+          className="mr-1"
+        >
+          All
+        </Button>
         {LETTERS.map((l) => {
           const isActive = selectedLetter === l;
           const disabled = availability[l] === 0;
