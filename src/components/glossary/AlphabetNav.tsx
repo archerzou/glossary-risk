@@ -9,25 +9,24 @@ const LETTERS = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)
 
 export function AlphabetNav() {
   const { setSelectedLetter, selectedLetter, clearSearch, clearSelectedLetter } = useGlossaryStore();
-  const { terms, searchTerm } = useGlossaryStore();
+  const { terms, searchTerm, selectedCategoryId } = useGlossaryStore();
 
   const availability = useMemo(() => {
     const counts: Record<string, number> = {};
     LETTERS.forEach((l) => (counts[l] = 0));
-    const filteredBySearch = (terms as Term[]).filter((t: Term) => {
-      if (!searchTerm) return true;
-      const q = searchTerm.toLowerCase();
-      return (
-        t.term.toLowerCase().includes(q) ||
-        t.definition.toLowerCase().includes(q)
-      );
+    const filteredBySearchAndCategory = (terms as Term[]).filter((t: Term) => {
+      const matchesSearch = !searchTerm || 
+        t.term.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        t.definition.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = !selectedCategoryId || t.categoryId === selectedCategoryId;
+      return matchesSearch && matchesCategory;
     });
-    filteredBySearch.forEach((t: Term) => {
+    filteredBySearchAndCategory.forEach((t: Term) => {
       const l = t.term.charAt(0).toUpperCase();
       if (counts[l] !== undefined) counts[l] += 1;
     });
     return counts;
-  }, [terms, searchTerm]);
+  }, [terms, searchTerm, selectedCategoryId]);
 
   return (
     <div className="rounded-lg border p-2 bg-card overflow-x-auto">
